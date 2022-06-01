@@ -28,6 +28,12 @@ namespace Roomies.API.Persistence.Repositories
 
         }
 
+        public async Task<Profile> FindByUserId(int userId)
+        {
+            return await _context.Profiles.Include(p => p.Plan).FirstAsync(p => p.UserId == userId);
+
+        }
+
         public async Task<IEnumerable<Profile>> ListAsync()
         {
             return await _context.Profiles.Include(p=>p.Plan).Include(p=>p.User).ToListAsync();

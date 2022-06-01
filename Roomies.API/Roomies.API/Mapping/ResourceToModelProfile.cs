@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Roomies.API.Domain.Models;
 using Roomies.API.Domain.Services.Communications;
+using Roomies.API.Plan.Resources;
 using Roomies.API.Publication.Domain.Models;
 using Roomies.API.Publication.Resources;
 using Roomies.API.Resources;
@@ -23,6 +24,7 @@ namespace Roomies.API.Mapping
             CreateMap<SaveLeaseholderResource, Leaseholder>();
             CreateMap<RegisterRequest, User>();
             CreateMap<SaveRuleResource, Rule>();
+            CreateMap<SavePlanResource, Domain.Models.Plan>();
         }
     }
 }

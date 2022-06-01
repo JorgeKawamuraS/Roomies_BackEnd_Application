@@ -8,10 +8,10 @@ namespace Roomies.API.Domain.Repositories
 {
     public interface IPlanRepository
     {
-        Task<IEnumerable<Plan>> ListAsync();
-        Task AddAsync(Plan plan);
-        Task<Plan> FindById(int id);
-        void Update(Plan plan);
-        void Remove(Plan plan);
+        Task<IEnumerable<Domain.Models.Plan>> ListAsync();
+        Task AddAsync(Domain.Models.Plan plan);
+        Task<Domain.Models.Plan> FindById(int id);
+        void Update(Domain.Models.Plan plan);
+        void Remove(Domain.Models.Plan plan);
     }
 }

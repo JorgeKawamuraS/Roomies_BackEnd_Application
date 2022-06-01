@@ -24,7 +24,7 @@ namespace Roomies.API.Resources
 		[MaxLength(240)]
 		public string Description { get; set; }
 		[Required]
-		public DateTime Birthday { get; set; }
+		public string Birthday { get; set; }
 		[Required]
 		[MaxLength(25)]
 		public string Department { get; set; }

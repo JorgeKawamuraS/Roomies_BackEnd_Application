@@ -14,13 +14,15 @@ namespace Roomies.API.Services
     {
         private readonly IProfileRepository _profileRepository;
         private readonly IPlanRepository _planRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ProfileService(IProfileRepository profileRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null)
+        public ProfileService(IProfileRepository profileRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null, IUserRepository userRepository = null)
         {
             _profileRepository = profileRepository;
             _unitOfWork = unitOfWork;
             _planRepository = planRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<ProfileResponse> DeleteAsync(int id)
@@ -53,6 +55,16 @@ namespace Roomies.API.Services
             return new ProfileResponse(existingUser);
         }
 
+        public async Task<ProfileResponse> GetByUserIdAsync(int userId)
+        {
+            var existingUser = await _profileRepository.FindByUserId(userId);
+
+            if (existingUser == null)
+                return new ProfileResponse("Usuario inexistente");
+
+            return new ProfileResponse(existingUser);
+        }
+
         public async Task<IEnumerable<Profile>> ListAsync()
         {
             return await _profileRepository.ListAsync();
@@ -63,20 +75,26 @@ namespace Roomies.API.Services
             return await _profileRepository.ListByPlanId(planId);
         }
 
-        public async Task<ProfileResponse> SaveAsync(Profile user,int planId)
+        public async Task<ProfileResponse> SaveAsync(Profile user,int planId, int userId)
         {
 
             var existingPlan = await _planRepository.FindById(planId);
+            var existinUser = await _userRepository.FindById(userId);
 
-            ////////////////////////
 
             if (existingPlan == null)
                 return new ProfileResponse("Plan inexistente");
+
+            if (existinUser== null)
+                return new ProfileResponse("User inexistente");
+
 
             try
             {
                 user.PlanId = planId;
                 user.Plan = existingPlan;
+                user.UserId = userId;
+                user.User = existinUser;
                 await _profileRepository.AddAsync(user);
                 await _unitOfWork.CompleteAsync();
 

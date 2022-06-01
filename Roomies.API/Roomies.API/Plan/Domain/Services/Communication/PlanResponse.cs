@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Roomies.API.Domain.Services.Communications
 {
-    public class PlanResponse : BaseResponse<Plan>
+    public class PlanResponse : BaseResponse<Domain.Models.Plan>
     {
-        public PlanResponse(Plan resource) : base(resource)
+        public PlanResponse(Domain.Models.Plan resource) : base(resource)
         {
         }
 

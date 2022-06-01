@@ -16,7 +16,7 @@ namespace Roomies.API.Mapping
         public ModelToResourceProfile()
         {
             CreateMap<PaymentMethod, PaymentMethodResource>();
-            CreateMap<Plan, PlanResource>();
+            CreateMap<Domain.Models.Plan, PlanResource>();
             CreateMap<Review, ReviewResource>();
             CreateMap<Post, PostResource>();
             CreateMap<Domain.Models.Profile, ProfileResource>();

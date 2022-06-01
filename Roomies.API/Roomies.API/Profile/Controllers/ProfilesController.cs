@@ -54,27 +54,9 @@ namespace Roomies.API.Controllers
                 var profileResource = _mapper.Map<Domain.Models.Profile, ProfileResource>(result.Resource);
                 return Ok(profileResource);
             }
-
-        [HttpPost("plans/{planId}/profiles")]
-
-        public async Task<IActionResult> PostAsync([FromBody] SaveProfileResource resource,int planId)
-            {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState.GetErrorMessages());
-
-                var profile = _mapper.Map<SaveProfileResource, Domain.Models.Profile>(resource);
-                var result = await _profileService.SaveAsync(profile,planId);
-
-                if (!result.Success)
-                    return BadRequest(result.Message);
-
-                var profileResource = _mapper.Map<Domain.Models.Profile, ProfileResource>(result.Resource);
-
-                return Ok(profileResource);
-            }
             //-------------
-            [HttpPut("{id}")]
-            public async Task<IActionResult> PutAsync(int id, [FromBody] SaveProfileResource resource)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutAsync(int id, [FromBody] SaveProfileResource resource)
             {
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState.GetErrorMessages());
@@ -91,8 +73,8 @@ namespace Roomies.API.Controllers
 
             }
 
-            [HttpDelete("{id}")]
-            public async Task<IActionResult> DeleteAsync(int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
             {
                 var result = await _profileService.DeleteAsync(id);
 

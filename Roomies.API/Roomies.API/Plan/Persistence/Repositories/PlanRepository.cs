@@ -15,27 +15,27 @@ namespace Roomies.API.Persistence.Repositories
         {
         }
 
-        public async Task AddAsync(Plan plan)
+        public async Task AddAsync(Domain.Models.Plan plan)
         {
             await _context.Plans.AddAsync(plan);
         }
 
-        public async Task<Plan> FindById(int id)
+        public async Task<Domain.Models.Plan> FindById(int id)
         {
             return await _context.Plans.FindAsync(id);
         }
 
-        public async Task<IEnumerable<Plan>> ListAsync()
+        public async Task<IEnumerable<Domain.Models.Plan>> ListAsync()
         {
             return await _context.Plans.ToListAsync();
         }
 
-        public void Remove(Plan plan)
+        public void Remove(Domain.Models.Plan plan)
         {
             _context.Plans.Remove(plan);
         }
 
-        public void Update(Plan plan)
+        public void Update(Domain.Models.Plan plan)
         {
             _context.Plans.Update(plan);
         }

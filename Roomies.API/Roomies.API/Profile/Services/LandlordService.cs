@@ -15,16 +15,18 @@ namespace Roomies.API.Services
         private readonly ILandlordRepository _landlordRepository;
         private readonly IPlanRepository _planRepository;
         private readonly IPostRepository _postRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProfileRepository _profileRepository;
 
-        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository, IPostRepository postRepository, IProfileRepository profileRepository)
+        public LandlordService(ILandlordRepository landlordRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository, IPostRepository postRepository, IProfileRepository profileRepository, IUserRepository userRepository)
         {
             _landlordRepository = landlordRepository;
             _unitOfWork = unitOfWork;
             _planRepository = planRepository;
             _postRepository = postRepository;
             _profileRepository = profileRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<LandlordResponse> DeleteAsync(int id)
@@ -71,34 +73,27 @@ namespace Roomies.API.Services
             return await _landlordRepository.ListAsync();
         }
 
-        public async Task<LandlordResponse> SaveAsync(Landlord landlord,int planId, string username)
+        public async Task<LandlordResponse> SaveAsync(Landlord landlord,int planId, int userId)
         {
             var existingPlan = await _planRepository.FindById(planId);
-            //var ExistingUsername = await _userRepository.FindByUsername(username); 
 
 
             if (existingPlan == null)
                 return new LandlordResponse("Plan inexistente");
 
-            //if (ExistingUsername == null)
-            //    return new LandlordResponse("Username no encontrado o invalido");
 
+            var existingUser = await _userRepository.FindById(userId);
 
-            DateTime fechaActual = DateTime.Today;
-            if (fechaActual.Year - landlord.Birthday.Year < 18)
-            {
-                return new LandlordResponse("El Landlord debe ser mayor de 18 años");
-            }
-
+            if (existingUser == null)
+                return new LandlordResponse("User inexistente");
             try
             {
-                //IEnumerable<Profile> users = await _profileRepository.ListAsync();
 
                 landlord.PlanId = planId;
                 landlord.Plan = existingPlan;
+                landlord.User = existingUser;
+                landlord.UserId = userId;
 
-                //landlord.UserId = ExistingUsername.Id;
-                //landlord.User = ExistingUsername;
 
                 await _landlordRepository.AddAsync(landlord);
                 await _unitOfWork.CompleteAsync();

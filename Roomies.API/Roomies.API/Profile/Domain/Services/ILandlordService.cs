@@ -11,7 +11,7 @@ namespace Roomies.API.Domain.Services
     {
         Task<IEnumerable<Landlord>> ListAsync();
         Task<LandlordResponse> GetByIdAsync(int id);
-        Task<LandlordResponse> SaveAsync(Landlord landlord,int planId, string username);
+        Task<LandlordResponse> SaveAsync(Landlord landlord,int planId, int userId);
         Task<LandlordResponse> UpdateAsync(int id, Landlord landlord);
         Task<LandlordResponse> DeleteAsync(int id);
 

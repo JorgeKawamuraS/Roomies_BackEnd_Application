@@ -49,14 +49,6 @@ namespace Roomies.API.Controllers
 
             return resources;
         }
-        /*[HttpGet("{id}/reviews")]
-        public async Task<IEnumerable<ReviewResource>> GetAllByPostIdAsync(int postId)
-        {
-            var reviews = await _reviewService.ListByPostIdAsync(postId);
-            var resources = _mapper.Map<IEnumerable<Review>, IEnumerable<ReviewResource>>(reviews);
-
-            return resources;
-        }*/
 
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(PostResource), 200)]

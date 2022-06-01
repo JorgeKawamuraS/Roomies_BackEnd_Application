@@ -11,6 +11,7 @@ namespace Roomies.API.Domain.Persistence.Repositories
         Task<IEnumerable<Profile>> ListAsync();
         Task<IEnumerable<Profile>> ListByPlanId(int planId);
         Task<Profile> FindById(int id);
+        Task<Profile> FindByUserId(int userId);
         Task AddAsync(Profile user);
         void Update(Profile user);
         void Remove(Profile user);

@@ -20,27 +20,6 @@ namespace Roomies.API.Services
 {
     public class UserService:IUserService
     {
-        // TODO: Replace by Repository-based Implementation
-        //private List<User> _users = new List<User>
-        //{
-        //    new User
-        //    {
-        //        Id = 1,
-        //        FirstName = "John",
-        //        LastName = "Doe",
-        //        Username = "john.doe@gmail.com",
-        //        PasswordHash = BCryptNet.BCrypt.HashPassword("test")
-        //    },
-        //    new User
-        //    {
-        //        Id = 2,
-        //        FirstName = "Jason",
-        //        LastName = "Bourne",
-        //        Username = "jason.bourne@treatstone.gov",
-        //        PasswordHash = BCryptNet.BCrypt.HashPassword("password")
-
-        //    }
-        //};
 
         private readonly AppSettings _appSettings;
 
@@ -69,7 +48,6 @@ namespace Roomies.API.Services
         }
         public async Task<AuthenticationResponse> Authenticate(AuthenticationRequest request)
         {
-            // TODO: Replace with Repository-based Behavior
             IEnumerable<User> users = await _userRepository.ListAsync();
 
             var user = users.ToList().SingleOrDefault(x => x.Username == request.Username);
@@ -95,7 +73,6 @@ namespace Roomies.API.Services
         public async Task< UserResponse> Register(RegisterRequest request)
         {
             IEnumerable<User> users = await _userRepository.ListAsync();
-            // throw new ApplicationException("Username '" + request.Username + "' is already taken");
 
             if (users.Any(x => x.Username == request.Username))
                 return new UserResponse($"El usuario {request.Username} ya existe");

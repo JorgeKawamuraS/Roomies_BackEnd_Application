@@ -62,12 +62,12 @@ namespace Roomies.API.Services
             return new PlanResponse(existingPlan);
         }
 
-        public async Task<IEnumerable<Plan>> ListAsync()
+        public async Task<IEnumerable<Domain.Models.Plan>> ListAsync()
         {
             return await _planRepository.ListAsync();
         }
 
-        public async Task<PlanResponse> SaveAsync(Plan plan)
+        public async Task<PlanResponse> SaveAsync(Domain.Models.Plan plan)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace Roomies.API.Services
             }
         }
 
-        public async Task<PlanResponse> UpdateAsync(int id, Plan plan)
+        public async Task<PlanResponse> UpdateAsync(int id, Domain.Models.Plan plan)
         {
             var existingPlan = await _planRepository.FindById(id);
 

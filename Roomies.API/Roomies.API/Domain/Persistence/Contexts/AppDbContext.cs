@@ -12,7 +12,7 @@ namespace Roomies.API.Domain.Persistence.Contexts
         public DbSet<Landlord> Landlords { get; set; }
         public DbSet<Leaseholder> Leaseholders { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Domain.Models.Plan> Plans { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Profile> Profiles { get; set; }
@@ -118,15 +118,15 @@ namespace Roomies.API.Domain.Persistence.Contexts
             //--------------------
 
             // Plan Entity
-            builder.Entity<Plan>().ToTable("Plans");
+            builder.Entity<Domain.Models.Plan>().ToTable("Plans");
 
             // Constraints
 
-            builder.Entity<Plan>().HasKey(p => p.Id);
-            builder.Entity<Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
-            builder.Entity<Plan>().Property(p => p.Price).IsRequired();
-            builder.Entity<Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
-            builder.Entity<Plan>().Property(p => p.Description).IsRequired().HasMaxLength(200);
+            builder.Entity<Domain.Models.Plan>().HasKey(p => p.Id);
+            builder.Entity<Domain.Models.Plan>().Property(p => p.Id).IsRequired().ValueGeneratedOnAdd();
+            builder.Entity<Domain.Models.Plan>().Property(p => p.Price).IsRequired();
+            builder.Entity<Domain.Models.Plan>().Property(p => p.Name).IsRequired().HasMaxLength(50);
+            builder.Entity<Domain.Models.Plan>().Property(p => p.Description).IsRequired().HasMaxLength(200);
 
             //builder.Entity<Plan>()
             //    .HasMany(p => p.Users)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Roomies.API.Domain.Models;
 using Roomies.API.Domain.Services;
 using Roomies.API.Extensions;
+using Roomies.API.Plan.Resources;
 using Roomies.API.Resources;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
@@ -18,12 +19,14 @@ namespace Roomies.API.Controllers
     public class PlansController:ControllerBase
     {
         private readonly IPlanService _planService;
+        private readonly IProfileService _profileService;
         private readonly IMapper _mapper;
 
-        public PlansController(IPlanService planService, IMapper mapper)
+        public PlansController(IPlanService planService, IMapper mapper, IProfileService profileService)
         {
             _planService = planService;
             _mapper = mapper;
+            _profileService = profileService;
         }
 
         [SwaggerOperation(
@@ -35,8 +38,8 @@ namespace Roomies.API.Controllers
         [HttpGet]
         public async Task<IEnumerable<PlanResource>> GetAllAsync()
         {
-            var plans = await _planService.ListAsync();//ListByCategoryIdAsync(categoryId);
-            var resources = _mapper.Map<IEnumerable<Plan>, IEnumerable<PlanResource>>(plans);
+            var plans = await _planService.ListAsync();
+            var resources = _mapper.Map<IEnumerable<Domain.Models.Plan>, IEnumerable<PlanResource>>(plans);
 
             return resources;
         }
@@ -51,10 +54,29 @@ namespace Roomies.API.Controllers
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            var planResource = _mapper.Map<Plan, PlanResource>(result.Resource);
+            var planResource = _mapper.Map<Domain.Models.Plan, PlanResource>(result.Resource);
             return Ok(planResource);
         }
-        
+
+        [HttpPost("plans")]
+
+        public async Task<IActionResult> PostAsync([FromBody] SavePlanResource resource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var plan = _mapper.Map<SavePlanResource, Domain.Models.Plan>(resource);
+            var result = await _planService.SaveAsync(plan);
+
+            if (!result.Success)
+                return BadRequest(result.Message);
+
+            var planResource= _mapper.Map<Domain.Models.Plan, PlanResource>(result.Resource);
+
+            return Ok(planResource);
+        }
+
+
 
     }
 }

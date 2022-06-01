@@ -18,15 +18,17 @@ namespace Roomies.API.Services
         private readonly IPlanRepository _planRepository;
         private readonly IFavouritePostRepository _favouritePostRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
         private readonly IProfileRepository _profileRepository;
 
-        public LeaseholderService(ILeaseholderRepository leaseholderRepository, IFavouritePostRepository favouritePostRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null, IProfileRepository profileRepository = null)
+        public LeaseholderService(ILeaseholderRepository leaseholderRepository, IFavouritePostRepository favouritePostRepository, IUnitOfWork unitOfWork, IPlanRepository planRepository = null, IProfileRepository profileRepository = null, IUserRepository userRepository = null)
         {
             _leaseholderRepository = leaseholderRepository;
             _favouritePostRepository = favouritePostRepository;
             _unitOfWork = unitOfWork;
             _planRepository = planRepository;
             _profileRepository = profileRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<LeaseholderResponse> DeleteAsync(int id)
@@ -79,34 +81,28 @@ namespace Roomies.API.Services
             return leaseholders;
         }
 
-        public async Task<LeaseholderResponse> SaveAsync(Leaseholder leaseholder,int planId, string username)
+        public async Task<LeaseholderResponse> SaveAsync(Leaseholder leaseholder,int planId, int userId)
         {
             var existingPlan = await _planRepository.FindById(planId);
-            //var ExistingUsername = await _userRepository.FindByUsername(username);
 
             if (existingPlan == null)
                 return new LeaseholderResponse("Plan inexistente");
-            //if (ExistingUsername == null)
-            //    return new LeaseholderResponse("Username no encontrado o invalido");
+
+            var existingUser = await _userRepository.FindById(userId);
 
 
-            DateTime fechaActual = DateTime.Today;
-            if (fechaActual.Year - leaseholder.Birthday.Year < 18)
-            {
-                return new LeaseholderResponse("El Leaseholder debe ser mayor de 18 años");
-            }
-                
+            if (existingUser == null)
+                return new LeaseholderResponse("User inexistente");
 
             try
             {
 
-                //IEnumerable<Profile> users = await _userRepository.ListAsync();
 
                 leaseholder.Plan = existingPlan;
                 leaseholder.PlanId = planId;
+                leaseholder.User = existingUser;
+                leaseholder.UserId = userId;
 
-                //leaseholder.UserId = ExistingUsername.Id;
-                //leaseholder.User = ExistingUsername;
 
                 await _leaseholderRepository.AddAsync(leaseholder);
                 await _unitOfWork.CompleteAsync();

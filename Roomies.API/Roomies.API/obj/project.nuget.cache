@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QE14c54X0OUWG9LTuCYSadtKU18Zf+hY2Jsrqixjz90kTVwo68Oer1fpTTRiTkGAsNzrZTot7zD4h5kWM6trUQ==",
+  "dgSpecHash": "nOJ4DNKndKJD4fM3Gc53az/Kmvl4ZB1iUHswuuqzPpFHXrAet6t2HiASDy+s6ypIW91aXy9cwxfq5KWk+lhdeQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\georg\\OneDrive\\Desktop\\Ciclo 7\\Diseño de Experimentos de ISW\\Capstone Project\\TB2\\Roomies.API (7)\\Roomies.API\\Roomies.API\\Roomies.API.csproj",
+  "projectFilePath": "C:\\Users\\georg\\OneDrive\\Desktop\\Nueva carpeta\\Roomies.API\\Roomies.API\\Roomies.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\georg\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
